@@ -11,10 +11,10 @@ def resize_image(input_image_path, output_image_path, size):
 # Example usage
 input_path = input('Enter the path for 1024 x 1024 image to generate android splash icons : ')
 target_sizes = [(288, 288), (432, 432), (576, 576), (864, 864), (1152, 1152)]
-zip_file_path = r'C:\Users\hosam\OneDrive\Desktop\android_splash.zip'
+zip_file_path = f'{os.path.join(os.path.dirname(input_path), "android_splash.zip")}'
 
 # Create a temporary directory to store resized images
-temp_dir = r'C:\Users\hosam\OneDrive\Desktop\temp'
+temp_dir = f'{os.path.join(os.path.dirname(input_path), "temp")}'
 os.makedirs(temp_dir, exist_ok=True)
 
 def getName(i) :
@@ -35,10 +35,8 @@ def getName(i) :
 for i, size in enumerate(target_sizes):
     folder_name = getName(i)
     folder_path = os.path.join(temp_dir, folder_name)
-    print(folder_path)
     os.makedirs(folder_path, exist_ok=True)
     output_path = os.path.join(folder_path, 'splash.png')
-    print(output_path)
     resize_image(input_path, output_path, size)
 
 # Create a ZIP file and add the resized images

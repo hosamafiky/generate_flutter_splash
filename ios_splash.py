@@ -11,10 +11,10 @@ def resize_image(input_image_path, output_image_path, size):
 # Example usage
 input_path = input('Enter the path for 1024 x 1024 image to generate ios splash icons : ')
 target_sizes = [(189, 207), (395, 413), (592, 619)]
-zip_file_path = r'C:\Users\hosam\OneDrive\Desktop\ios_splash.zip'
+zip_file_path = f'{os.path.join(os.path.dirname(input_path), "ios_splash.zip")}'
 
 # Create a temporary directory to store resized images
-temp_dir = r'C:\Users\hosam\OneDrive\Desktop\temp'
+temp_dir = f'{os.path.join(os.path.dirname(input_path), "temp")}'
 os.makedirs(temp_dir, exist_ok=True)
 
 # Resize and save the images
