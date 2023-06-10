@@ -19,7 +19,7 @@ os.makedirs(temp_dir, exist_ok=True)
 
 # Resize and save the images
 for i, size in enumerate(target_sizes):
-    output_path = os.path.join(temp_dir, f'{i+1}x.png' if i+1 != 1 else f'{i+1}.png')
+    output_path = os.path.join(temp_dir, f'LaunchImage@{i+1}x.png' if i+1 != 1 else 'LaunchImage.png')
     resize_image(input_path, output_path, size)
 
 # Create a ZIP file and add the resized images
