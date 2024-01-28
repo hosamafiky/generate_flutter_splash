@@ -14,7 +14,9 @@ def resize_image(input_image_path, output_image_path, size):
 input_path = input(
     "Enter the path for 1024 x 1024 image to generate android splash icons : "
 )
-target_sizes = [(288, 288), (432, 432), (576, 576), (864, 864), (1152, 1152)]
+
+with_bg_sizes = [(180,180), (240,240), (360,360), (480,480), (720,720), (960,960)]
+without_bg_sizes = [(216,216), (288,288),(432, 432), (576, 576), (864, 864), (1152, 1152)]
 zip_file_path = f'{os.path.join(os.path.dirname(input_path), "android_splash.zip")}'
 
 # Create a temporary directory to store resized images
@@ -34,14 +36,28 @@ def getName(i):
     else:
         return "drawable-xxxhdpi"
 
+def has_transparency(img):
+    image = Image.open(img)
+    if image.mode in ('RGBA', 'LA') or (image.mode == 'P' and 'transparency' in image.info):
+        return True
+    return False
 
-# Resize and save the images
-for i, size in enumerate(target_sizes):
-    folder_name = getName(i)
-    folder_path = os.path.join(temp_dir, folder_name)
-    os.makedirs(folder_path, exist_ok=True)
-    output_path = os.path.join(folder_path, "splash.png")
-    resize_image(input_path, output_path, size)
+if(has_transparency(input_path)):
+    # Resize and save the images
+    for i, size in enumerate(without_bg_sizes):
+        folder_name = getName(i)
+        folder_path = os.path.join(temp_dir, folder_name)
+        os.makedirs(folder_path, exist_ok=True)
+        output_path = os.path.join(folder_path, "splash.png")
+        resize_image(input_path, output_path, size)
+else :
+    # Resize and save the images
+    for i, size in enumerate(with_bg_sizes):
+        folder_name = getName(i)
+        folder_path = os.path.join(temp_dir, folder_name)
+        os.makedirs(folder_path, exist_ok=True)
+        output_path = os.path.join(folder_path, "splash.png")
+        resize_image(input_path, output_path, size)    
 
 # Create a ZIP file and add the resized images
 with zipfile.ZipFile(zip_file_path, "w") as zip_file:
